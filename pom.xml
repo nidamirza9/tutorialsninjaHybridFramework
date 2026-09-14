@@ -18,7 +18,7 @@
     <maven.compiler.release>17</maven.compiler.release>
     <suiteXmlFile>src/test/java/testBase/grouping.xml</suiteXmlFile>
     <execution_env>local</execution_env>
-    <selenium.grid.url>http://localhost:4444/wd/hub</selenium.grid.url>
+    <selenium.grid.url>http://localhost:4444</selenium.grid.url>
     <headless>false</headless>
   </properties>
 
@@ -116,7 +116,7 @@
       <properties>
         <suiteXmlFile>src/test/java/testBase/ci-suite.xml</suiteXmlFile>
         <execution_env>remote</execution_env>
-        <selenium.grid.url>http://selenium-hub:4444/wd/hub</selenium.grid.url>
+        <selenium.grid.url>http://selenium-hub:4444</selenium.grid.url>
         <headless>true</headless>
       </properties>
     </profile>

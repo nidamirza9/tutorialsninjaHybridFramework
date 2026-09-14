@@ -33,7 +33,7 @@ services:
     environment:
       JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
       CASC_JENKINS_CONFIG: "/var/jenkins_casc/casc.yaml"
-      SELENIUM_REMOTE_URL: "http://selenium-hub:4444/wd/hub"
+      SELENIUM_REMOTE_URL: "http://selenium-hub:4444"
       EXECUTION_ENV: "remote"
       HEADLESS: "true"
     depends_on:

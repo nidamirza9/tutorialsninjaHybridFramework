@@ -44,11 +44,11 @@ jobs:
         env:
           EXECUTION_ENV: remote
           HEADLESS: "true"
-          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+          SELENIUM_REMOTE_URL: http://localhost:4444
         run: |
           mvn -B -Pci test \
             -Dexecution_env=remote \
-            -Dselenium.grid.url=http://localhost:4444/wd/hub \
+            -Dselenium.grid.url=http://localhost:4444 \
             -Dheadless=true \
             -DsuiteXmlFile=src/test/java/testBase/ci-suite.xml
 

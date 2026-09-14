@@ -14,8 +14,7 @@
       </run>
     </groups>
     <classes>
-      <class name="testCases.TC_001_AccountRegistrationTest"/>
-      <class name="testCases.TC_002_LoginTest"/>
+      <class name="testCases.TC_000_HomePageSmokeTest"/>
     </classes>
   </test>
 </suite>

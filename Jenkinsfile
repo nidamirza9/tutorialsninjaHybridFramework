@@ -11,7 +11,7 @@ pipeline {
   environment {
     EXECUTION_ENV = 'remote'
     HEADLESS = 'true'
-    SELENIUM_REMOTE_URL = 'http://selenium-hub:4444/wd/hub'
+    SELENIUM_REMOTE_URL = 'http://selenium-hub:4444'
     DOCKER_NETWORK = 'tninja_ci-net'
   }
 
@@ -59,10 +59,10 @@ pipeline {
           NET_ARGS=""
           if docker network inspect "$DOCKER_NETWORK" >/dev/null 2>&1; then
             NET_ARGS="--network $DOCKER_NETWORK"
-            GRID_URL="http://selenium-hub:4444/wd/hub"
+            GRID_URL="http://selenium-hub:4444"
           else
             NET_ARGS="--network host"
-            GRID_URL="http://localhost:4444/wd/hub"
+            GRID_URL="http://localhost:4444"
           fi
 
           docker run --rm $NET_ARGS \

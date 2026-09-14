@@ -65,24 +65,21 @@ public class BaseClass {
 				System.getenv("SELENIUM_REMOTE_URL"),
 				System.getProperty("selenium.grid.url"),
 				p.getProperty("selenium.grid.url"),
-				"http://localhost:4444/wd/hub");
+				"http://localhost:4444");
 
 		if ("remote".equalsIgnoreCase(executionEnv)) {
 			if (br.equalsIgnoreCase("chrome")) {
 				ChromeOptions options = new ChromeOptions();
-				options.setPlatformName(normalizePlatform(os));
 				applyChromeOptions(options, headless);
 				driver = new RemoteWebDriver(new URL(gridUrl), options);
 			} else if (br.equalsIgnoreCase("edge")) {
 				EdgeOptions options = new EdgeOptions();
-				options.setPlatformName(normalizePlatform(os));
 				if (headless) {
 					options.addArguments("--headless=new", "--window-size=1920,1080");
 				}
 				driver = new RemoteWebDriver(new URL(gridUrl), options);
 			} else if (br.equalsIgnoreCase("firefox")) {
 				FirefoxOptions options = new FirefoxOptions();
-				options.setPlatformName(normalizePlatform(os));
 				if (headless) {
 					options.addArguments("-headless");
 				}
@@ -141,20 +138,6 @@ public class BaseClass {
 		prefs.put("credentials_enable_service", false);
 		prefs.put("profile.password_manager_enabled", false);
 		options.setExperimentalOption("prefs", prefs);
-	}
-
-	private static String normalizePlatform(String os) {
-		if (os == null) {
-			return "linux";
-		}
-		String value = os.trim().toLowerCase();
-		if (value.startsWith("win")) {
-			return "windows";
-		}
-		if (value.startsWith("mac")) {
-			return "mac";
-		}
-		return "linux";
 	}
 
 	private static String firstNonBlank(String... values) {
