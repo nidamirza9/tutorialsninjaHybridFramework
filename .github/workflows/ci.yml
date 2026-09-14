@@ -18,14 +18,19 @@ jobs:
       - name: Start Selenium Grid
         run: |
           docker compose -f docker-compose.grid.yml up -d
-          for i in $(seq 1 40); do
-            if curl -sf http://localhost:4444/status | grep -q '"ready":true\|"ready" : true'; then
-              echo "Selenium Hub ready"
+          echo "Waiting for Selenium Hub + Chrome node..."
+          for i in $(seq 1 60); do
+            BODY=$(curl -sf http://localhost:4444/status 2>/dev/null | tr -d ' \n' || true)
+            echo "Attempt $i: $BODY"
+            if echo "$BODY" | grep -q '"ready":true'; then
+              echo "Selenium Grid is ready"
               exit 0
             fi
-            sleep 3
+            sleep 5
           done
-          docker compose -f docker-compose.grid.yml logs
+          echo "Grid failed to become ready"
+          docker compose -f docker-compose.grid.yml ps
+          docker compose -f docker-compose.grid.yml logs --no-color | tail -n 200
           exit 1
 
       - name: Set up JDK 17
