@@ -52,6 +52,14 @@ jobs:
             -Dheadless=true \
             -DsuiteXmlFile=src/test/java/testBase/ci-suite.xml
 
+      - name: Show Surefire errors
+        if: failure()
+        run: |
+          echo "==== surefire reports ===="
+          find target/surefire-reports -type f -print -exec sed -n '1,200p' {} \; 2>/dev/null || true
+          echo "==== reports dir ===="
+          ls -la reports 2>/dev/null || true
+
       - name: Upload Extent + Surefire reports
         if: always()
         uses: actions/upload-artifact@v4
