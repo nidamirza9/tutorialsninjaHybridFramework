@@ -1,30 +1,12 @@
-# Selenium Grid for remote WebDriver sessions
+# Lightweight Grid for CI: single standalone Chrome (more reliable than hub+node)
 services:
   selenium-hub:
-    image: selenium/hub:4.27.0
+    image: selenium/standalone-chrome:4.27.0
     container_name: selenium-hub
+    shm_size: 2gb
     ports:
-      - "4442:4442"
-      - "4443:4443"
       - "4444:4444"
     environment:
-      SE_OPTS: "--session-timeout 300"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
-      interval: 10s
-      timeout: 5s
-      retries: 12
-      start_period: 20s
-
-  chrome:
-    image: selenium/node-chrome:4.27.0
-    container_name: selenium-chrome
-    shm_size: 2gb
-    depends_on:
-      - selenium-hub
-    environment:
-      SE_EVENT_BUS_HOST: selenium-hub
-      SE_EVENT_BUS_PUBLISH_PORT: 4442
-      SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
       SE_NODE_MAX_SESSIONS: 2
       SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+      SE_SESSION_TIMEOUT: "300"
