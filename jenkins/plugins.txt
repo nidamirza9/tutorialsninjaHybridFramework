@@ -1,0 +1,9 @@
+workflow-aggregator:latest
+git:latest
+pipeline-stage-view:latest
+docker-workflow:latest
+htmlpublisher:latest
+configuration-as-code:latest
+job-dsl:latest
+timestamper:latest
+ws-cleanup:latest

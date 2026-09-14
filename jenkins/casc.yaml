@@ -1,0 +1,43 @@
+jenkins:
+  systemMessage: "TutorialsNinja Hybrid Framework — Jenkins CI/CD"
+  numExecutors: 2
+  mode: NORMAL
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin123"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+jobs:
+  - script: |
+      pipelineJob('tutorialsninja-hybrid-ci') {
+        description('Dockerized Selenium Grid + Maven TestNG regression on every SCM change')
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/nidamirza9/tutorialsninjaHybridFramework.git')
+                }
+                branches('*/main', '*/master')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+        properties {
+          pipelineTriggers {
+            triggers {
+              scm('H/15 * * * *')
+            }
+          }
+        }
+      }
+
+unclassified:
+  location:
+    url: "http://localhost:8080/"

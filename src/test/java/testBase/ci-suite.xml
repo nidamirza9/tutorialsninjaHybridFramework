@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CI Smoke Suite" verbose="1">
+  <listeners>
+    <listener class-name="utilities.ExtentReportManager"/>
+  </listeners>
+
+  <test name="CI Chrome Smoke">
+    <parameter name="browser" value="chrome"/>
+    <parameter name="os" value="linux"/>
+    <groups>
+      <run>
+        <include name="Master"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testCases.TC_001_AccountRegistrationTest"/>
+      <class name="testCases.TC_002_LoginTest"/>
+    </classes>
+  </test>
+</suite>

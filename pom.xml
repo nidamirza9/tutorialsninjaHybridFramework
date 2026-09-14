@@ -16,6 +16,10 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
+    <suiteXmlFile>src/test/java/testBase/grouping.xml</suiteXmlFile>
+    <execution_env>local</execution_env>
+    <selenium.grid.url>http://localhost:4444/wd/hub</selenium.grid.url>
+    <headless>false</headless>
   </properties>
 
   <dependencyManagement>
@@ -106,12 +110,44 @@
 </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>ci</id>
+      <properties>
+        <suiteXmlFile>src/test/java/testBase/ci-suite.xml</suiteXmlFile>
+        <execution_env>remote</execution_env>
+        <selenium.grid.url>http://selenium-hub:4444/wd/hub</selenium.grid.url>
+        <headless>true</headless>
+      </properties>
+    </profile>
+  </profiles>
+
   <build>
   <testResources>
         <testResource>
             <directory>resources</directory>
         </testResource>
     </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+          </suiteXmlFiles>
+          <systemPropertyVariables>
+            <execution_env>${execution_env}</execution_env>
+            <selenium.grid.url>${selenium.grid.url}</selenium.grid.url>
+            <headless>${headless}</headless>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -132,10 +168,15 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.3.0</version>
           <configuration>
-					  <suiteXmlFiles>
-						  <suiteXmlFile>src/test/java/testBase/grouping.xml</suiteXmlFile>
-					  </suiteXmlFiles>
-				  </configuration>
+            <suiteXmlFiles>
+              <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+            </suiteXmlFiles>
+            <systemPropertyVariables>
+              <execution_env>${execution_env}</execution_env>
+              <selenium.grid.url>${selenium.grid.url}</selenium.grid.url>
+              <headless>${headless}</headless>
+            </systemPropertyVariables>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>

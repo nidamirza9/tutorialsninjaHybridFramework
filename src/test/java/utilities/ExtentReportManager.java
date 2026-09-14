@@ -43,7 +43,9 @@ public class ExtentReportManager implements ITestListener {
 		
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());// time stamp
 		repName = "Test-Report-" + timeStamp + ".html";
-		sparkReporter = new ExtentSparkReporter(".\\reports\\" + repName);// specify location of the report
+		File reportsDir = new File(System.getProperty("user.dir"), "reports");
+		reportsDir.mkdirs();
+		sparkReporter = new ExtentSparkReporter(new File(reportsDir, repName).getAbsolutePath());
 
 		sparkReporter.config().setDocumentTitle("opencart Automation Report"); // Title of report
 		sparkReporter.config().setReportName("opencart Functional Testing"); // name of the report
