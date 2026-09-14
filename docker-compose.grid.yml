@@ -9,6 +9,12 @@ services:
       - "4444:4444"
     environment:
       SE_OPTS: "--session-timeout 300"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
 
   chrome:
     image: selenium/node-chrome:4.27.0
